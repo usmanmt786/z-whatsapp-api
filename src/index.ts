@@ -13,6 +13,9 @@ import fs from "fs";
 //////////////////////// SERVER CONFIGS BEGINS ////////////////////////
 config({ path: path.resolve(__dirname, '../.env') });
 
+if(!process.env.API_KEY){
+    throw new Error('Missing API_KEY in .env file');
+}
 
 const app = express();
 app.use(bodyParser.json());
