@@ -22,14 +22,17 @@ const waclient = new Client({
 
 waclient.on('qr', (qr) => {
   // qrcode.generate(qr, {small: true});
-  console.log(qr);
   fs.writeFileSync(join(__dirname, '../qr.txt'), qr);
-
   
 });
 
 waclient.on('ready', () => {
   console.log('⚡ Z-WAPI Client is ready!');
+  fs.writeFileSync(join(__dirname, '../qr.txt'), "CONNECTED");
+  setTimeout(() => {
+    fs.writeFileSync(join(__dirname, '../qr.txt'),"");
+  }, 15000);
+
 });
 
 export default waclient;

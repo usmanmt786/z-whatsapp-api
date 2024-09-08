@@ -20,6 +20,9 @@
             color: #fff;
             cursor: pointer;
         }
+        #qrcode{
+            color: #bb1c00;
+        }
     </style>
 </head>
 <body>
@@ -37,13 +40,28 @@
     setInterval(function () {
         reload();
     }, 10000);
+  
+  function start(){
+    const qrEl = document.getElementById("qrcode");
     const qrValue = '<%= qr %>';
+    if(qrValue==="CONNECTED"){
+        alert("Whatsapp Connected");
+        qrEl.innerHTML = "Whatsapp Connected"
+        return;
+    }
+    if(qrValue.length<10){
+        
+        qrEl.innerHTML = "Invalid QR Value"
+        return;
+    }
 
     // Generate QR code
-    const qrcode = new QRCode(document.getElementById("qrcode"), {
+    const qrcode = new QRCode(qrEl, {
         text: qrValue,
         width: 350,  // width of the QR code
         height: 350  // height of the QR code
     });
+  }
+  start();
 </script>
 </html>
