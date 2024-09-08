@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style type="text/css">
+        body{
+            padding: 2rem;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        .reload{
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #00864a;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Z-WA Authentication</h1>
+    <div id="qrcode" style="margin-top: 20px;"></div>
+    <div>
+        <button class="reload" onclick="reload()">Reload</button>
+    </div>
+</body>
+<script>
+
+    function reload(){
+        window.location.reload();
+    }
+    setInterval(function () {
+        reload();
+    }, 10000);
+    const qrValue = '<%= qr %>';
+
+    // Generate QR code
+    const qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: qrValue,
+        width: 350,  // width of the QR code
+        height: 350  // height of the QR code
+    });
+</script>
+</html>

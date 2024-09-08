@@ -1,6 +1,7 @@
 import { Client,LocalAuth } from 'whatsapp-web.js';
 import ZWAPIConfig from './configs';
-import qrcode from "qrcode-terminal";
+import fs from "fs";
+import { join } from 'path';
 
 const waclient = new Client({
     authStrategy: new LocalAuth(),
@@ -20,8 +21,10 @@ const waclient = new Client({
 );
 
 waclient.on('qr', (qr) => {
-  qrcode.generate(qr, {small: true});
+  // qrcode.generate(qr, {small: true});
   console.log(qr);
+  fs.writeFileSync(join(__dirname, '../qr.txt'), qr);
+
   
 });
 

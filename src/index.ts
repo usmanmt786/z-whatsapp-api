@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
-import path from 'path';
+import path, { join } from 'path';
 import bodyParser from "body-parser";
 import express from "express";
 import multer from "multer";
@@ -21,12 +21,31 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.set('view engine', 'ejs');
+app.set('views', join(__dirname, '../views')); 
+
+
 const upload = multer({ storage });
 
 ///////////////////////// SERVER CONFIGS ENDS ////////////////////////
 
 
 waclient.initialize();
+
+app.get('/auth', async (req, res) => {
+    try {
+
+        const textFile = fs.readFileSync(join(__dirname, '../qr.txt'), 'utf8');
+        const qrData = textFile.trim();
+        
+        res.render('auth', {qr:qrData})
+        
+
+    } catch (error) {
+        console.error('Error sending message:', error);
+        return res.status(500).json({ success: false, message: 'Failed to send message', error });
+    }
+});
 
 
 app.post('/:num/message', apiAuthorize, async (req, res) => {
